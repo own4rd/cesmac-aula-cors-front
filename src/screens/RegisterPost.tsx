@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
+import { postService } from '../services/PostService';
 
 export default function RegisterPost() {
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
 
-    const onSave = (e: React.FormEvent) => {
+    const onSave = async (e: React.FormEvent) => {
         e.preventDefault();
+        const result = await postService.savePost({
+            "title": title,
+            "description": description
+        })
+        const STATUS_CREATED = 201
+        if(result == STATUS_CREATED) {
+            alert('Criado com sucesso!');
+        }
     };
 
     return (
